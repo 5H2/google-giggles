@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Background Website</title>
+    <style>
+        /* Ensure the video covers the whole background */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Blur overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Simple description style */
+        .centered-text p {
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            margin: 0 20px;
+        }
+
+        /* Animated button styling */
+        .animated-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .animated-button.show {
+            opacity: 1;
+        }
+
+        /* Button hover effect */
+        .animated-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="centered-text">
+            <p>You are an astronaut aboard the ISS</p>
+            <p>You will now view earth.</p>
+        </div>
+        <button id="reveal-button" class="animated-button" style="display: none;">Explore</button>
+    </div>
+    
+    <video autoplay muted loop id="background-video">
+        <source src="space.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        window.onload = function () {
+            // Show the button after 5 seconds
+            setTimeout(() => {
+                const button = document.getElementById('reveal-button');
+                button.style.display = 'block';  // Make the button visible
+                button.classList.add('show');    // Start the animation
+            }, 5000);
+
+            // Button click event to remove blur and text
+            document.getElementById('reveal-button').onclick = function () {
+                const overlay = document.getElementById('overlay');
+                overlay.style.transition = 'opacity 0.5s ease';
+                overlay.style.opacity = '0';  // Fade out the overlay
+                setTimeout(() => {
+                    overlay.style.display = 'none';  // Hide the overlay after fade out
+                }, 500);  // Wait for the fade-out transition to complete
+            };
+        };
+    </script>
+</body>
+</html>
