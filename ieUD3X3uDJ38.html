@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5dc;
+            padding: 50px;
+        }
+        #cookie {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://via.placeholder.com/200?text=Cookie');
+            background-size: cover;
+            cursor: pointer;
+            border: 2px solid #8b4513;
+            border-radius: 50%;
+            margin: 0 auto;
+            transition: transform 0.1s;
+        }
+        #cookie:hover {
+            transform: scale(1.1);
+        }
+        #cookie-count, #autoclicker-info {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Cookie Clicker</h1>
+<div id="cookie" onclick="incrementCookies()"></div>
+<div id="cookie-count">Cookies: 0</div>
+
+<div id="autoclicker-info">
+    Autoclicker Price: <span id="autoclicker-price">5</span> Cookies
+    <button class="button" id="buy-autoclicker" onclick="buyAutoclicker()">Buy Autoclicker</button>
+</div>
+
+<footer>
+    <p>&copy; 2024 Cookie Clicker. All rights reserved.</p>
+</footer>
+
+<script>
+    let cookieCount = 0;
+    let autoclickerPrice = 5;
+    let autoclickers = 0;
+
+    function incrementCookies() {
+        cookieCount++;
+        document.getElementById('cookie-count').innerText = `Cookies: ${cookieCount}`;
+    }
+
+    function buyAutoclicker() {
+        if (cookieCount >= autoclickerPrice) {
+            cookieCount -= autoclickerPrice;
+            autoclickers++;
+            autoclickerPrice = Math.floor(autoclickerPrice * 1.5); // Increase price by 50%
+            document.getElementById('cookie-count').innerText = `Cookies: ${cookieCount}`;
+            document.getElementById('autoclicker-price').innerText = autoclickerPrice;
+            startAutoclicking();
+        } else {
+            alert("Not enough cookies!");
+        }
+    }
+
+    function startAutoclicking() {
+        setInterval(() => {
+            cookieCount += autoclickers; // Add cookies based on number of autoclickers
+            document.getElementById('cookie-count').innerText = `Cookies: ${cookieCount}`;
+        }, 1000); // Autoclick every second
+    }
+</script>
+
+</body>
+</html>
